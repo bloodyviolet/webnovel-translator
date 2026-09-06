@@ -1,0 +1,135 @@
+#wnt-panel {
+  all: initial;
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  width: 260px;
+  z-index: 2147483647;
+  background: #1e1e24;
+  color: #eee;
+  font-family: system-ui, sans-serif;
+  font-size: 12px;
+  border-radius: 8px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+#wnt-panel * {
+  box-sizing: border-box;
+  font-family: system-ui, sans-serif;
+}
+
+#wnt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #33333d;
+  padding: 8px 10px;
+  font-weight: 600;
+  font-size: 12px;
+  color: #fff;
+  cursor: default;
+}
+
+#wnt-header button {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0 4px;
+}
+
+#wnt-body {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#wnt-panel.wnt-minimized #wnt-body {
+  display: none;
+}
+
+#wnt-panel label {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 11px;
+  color: #ccc;
+}
+
+#wnt-panel label.wnt-row {
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+
+#wnt-panel input[type="text"],
+#wnt-panel select,
+#wnt-panel textarea {
+  background: #2a2a32;
+  border: 1px solid #444;
+  color: #eee;
+  padding: 5px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  width: 100%;
+}
+
+#wnt-panel textarea {
+  min-height: 50px;
+  resize: vertical;
+}
+
+#wnt-panel button#wnt-translate,
+#wnt-panel button#wnt-toggle {
+  background: #4a7dff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 7px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+#wnt-panel button#wnt-toggle {
+  background: #444;
+}
+
+#wnt-panel button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+#wnt-status {
+  color: #aaa;
+  min-height: 14px;
+}
+
+#wnt-glossary-count {
+  color: #888;
+  font-size: 10.5px;
+}
+
+#wnt-panel button#wnt-pick {
+  background: #555;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+body.wnt-picking,
+body.wnt-picking * {
+  cursor: crosshair !important;
+}
+
+.wnt-hover-highlight {
+  outline: 2px solid #4a7dff !important;
+  outline-offset: 1px;
+  background: rgba(74, 125, 255, 0.12) !important;
+}

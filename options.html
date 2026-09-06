@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Translator Options</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 500px; margin: auto; }
+    .option-group { margin-bottom: 15px; }
+    label { display: block; font-weight: bold; margin-bottom: 5px; }
+    input[type="text"], input[type="password"], input[type="number"] { width: 100%; padding: 8px; box-sizing: border-box; }
+    button { padding: 10px 15px; cursor: pointer; background-color: #007bff; color: white; border: none; border-radius: 4px; font-weight: bold; }
+    button:hover { background-color: #0056b3; }
+    #status { margin-top: 10px; color: green; font-weight: bold; }
+    small { color: #666; font-size: 12px; display: inline-block; margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <h2>API Settings</h2>
+
+  <div class="option-group">
+    <label for="baseUrl">Provider API Base URL:</label>
+    <input type="text" id="baseUrl" placeholder="https://api.deepseek.com/chat/completions">
+    <small>Examples:<br>- DeepSeek: <i>https://api.deepseek.com/chat/completions</i><br>- OpenRouter: <i>https://openrouter.ai/api/v1/chat/completions</i></small>
+  </div>
+
+  <div class="option-group">
+    <label for="model">Model ID:</label>
+    <input type="text" id="model" placeholder="deepseek-chat">
+    <small>Examples: <i>deepseek-chat</i>, <i>openrouter/free</i></small>
+  </div>
+
+  <div class="option-group">
+    <label for="apiKey">API Key:</label>
+    <input type="password" id="apiKey" placeholder="Your API Key">
+  </div>
+
+  <hr style="border: 1px solid #eee; margin: 25px 0;">
+
+  <h2>Translation Settings</h2>
+
+  <div class="option-group">
+    <label for="targetLang">Target Language:</label>
+    <input type="text" id="targetLang" placeholder="English">
+  </div>
+
+  <div class="option-group">
+    <label for="chunkChars">Batch Size (characters):</label>
+    <input type="number" id="chunkChars" placeholder="6000">
+    <small>Lower this if you get JSON parsing errors on long chapters.</small>
+  </div>
+
+  <button id="save">Save Settings</button>
+  <div id="status"></div>
+
+  <script src="options.js"></script>
+</body>
+</html>
