@@ -20,3 +20,7 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+# Test dependencies and output
+node_modules/
+playwright-report/
+test-results/

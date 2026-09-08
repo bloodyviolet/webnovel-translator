@@ -1,17 +1,1 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <style>
-    body { font-family: system-ui, sans-serif; width: 240px; padding: 14px; }
-    p { font-size: 13px; line-height: 1.4; }
-    button { width: 100%; padding: 8px; margin-top: 8px; font-size: 13px; cursor: pointer; }
-  </style>
-</head>
-<body>
-  <p>Use the floating <strong>Translator</strong> panel in the bottom-right corner of the page to pick a genre mode, translate, and toggle auto-continue.</p>
-  <button id="showPanel">Show panel on this page</button>
-  <button id="openOptions">API key / settings</button>
-  <script src="popup.js"></script>
-</body>
-</html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Webnovel Translator</title><link rel="stylesheet" href="ui.css"><style>body{width:310px;padding:16px}button{display:block;width:100%;margin:8px 0}</style></head><body><strong>Webnovel Translator</strong><label>Translation engine<select id="engine" disabled></select></label><p id="engineStatus" role="status"></p><p>Enable the reader on this site. Hiding pauses automatic starts; use Stop to stop an active job.</p><button id="show" disabled>Enable reader on this site</button><button id="hide" disabled>Hide reader on this site</button><button id="jobs">Translation jobs</button><button id="options">Settings and glossaries</button><p id="status" role="status"></p><script src="shared.js"></script><script src="popup.js"></script></body></html>

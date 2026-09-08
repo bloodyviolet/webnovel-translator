@@ -1,57 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Translator Options</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; max-width: 500px; margin: auto; }
-    .option-group { margin-bottom: 15px; }
-    label { display: block; font-weight: bold; margin-bottom: 5px; }
-    input[type="text"], input[type="password"], input[type="number"] { width: 100%; padding: 8px; box-sizing: border-box; }
-    button { padding: 10px 15px; cursor: pointer; background-color: #007bff; color: white; border: none; border-radius: 4px; font-weight: bold; }
-    button:hover { background-color: #0056b3; }
-    #status { margin-top: 10px; color: green; font-weight: bold; }
-    small { color: #666; font-size: 12px; display: inline-block; margin-top: 4px; }
-  </style>
-</head>
-<body>
-  <h2>API Settings</h2>
-
-  <div class="option-group">
-    <label for="baseUrl">Provider API Base URL:</label>
-    <input type="text" id="baseUrl" placeholder="https://api.deepseek.com/chat/completions">
-    <small>Examples:<br>- DeepSeek: <i>https://api.deepseek.com/chat/completions</i><br>- OpenRouter: <i>https://openrouter.ai/api/v1/chat/completions</i></small>
-  </div>
-
-  <div class="option-group">
-    <label for="model">Model ID:</label>
-    <input type="text" id="model" placeholder="deepseek-chat">
-    <small>Examples: <i>deepseek-chat</i>, <i>openrouter/free</i></small>
-  </div>
-
-  <div class="option-group">
-    <label for="apiKey">API Key:</label>
-    <input type="password" id="apiKey" placeholder="Your API Key">
-  </div>
-
-  <hr style="border: 1px solid #eee; margin: 25px 0;">
-
-  <h2>Translation Settings</h2>
-
-  <div class="option-group">
-    <label for="targetLang">Target Language:</label>
-    <input type="text" id="targetLang" placeholder="English">
-  </div>
-
-  <div class="option-group">
-    <label for="chunkChars">Batch Size (characters):</label>
-    <input type="number" id="chunkChars" placeholder="6000">
-    <small>Lower this if you get JSON parsing errors on long chapters.</small>
-  </div>
-
-  <button id="save">Save Settings</button>
-  <div id="status"></div>
-
-  <script src="options.js"></script>
-</body>
-</html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Translator settings</title><link rel="stylesheet" href="ui.css"></head><body><main>
+<h1>Webnovel Translator</h1><p>Local llama.cpp/SYCL support, persistent jobs, and per-language story glossaries.</p><nav><a href="runner.html">Translation jobs</a><a href="README.md">Release guide</a></nav>
+<fieldset><legend>Saved engines</legend><label>Engine profile<select id="profiles" disabled></select></label><button id="newProfile">New engine</button><button id="deleteProfile" disabled>Delete selected engine</button><label>Engine name<input id="profileName" maxlength="80" placeholder="Local Qwen / Gemini / OpenAI / DeepSeek"></label><p id="profileStatus" class="status" role="status"></p><small>Each engine saves its model, endpoint, API key, and all generation settings below. Choose the active engine from the extension popup.</small></fieldset>
+<fieldset><legend>Model server</legend><label>Provider preset<select id="provider"><option value="llamacpp">llama.cpp (including SYCL)</option><option value="lmstudio">LM Studio</option><option value="ollama">Ollama native</option><option value="gemini">Gemini (OpenAI-compatible API)</option><option value="openai">OpenAI / custom compatible API</option><option value="deepseek">DeepSeek</option></select></label>
+<label>Full chat endpoint<input id="baseUrl" type="url" required></label><small>Credentials are scoped to this exact endpoint. Changing it clears the displayed key.</small>
+<div class="grid"><label>Model ID<input id="model" list="models" required><datalist id="models"></datalist></label><label>API key (optional for unauthenticated local servers)<input id="apiKey" type="password" autocomplete="off"></label></div>
+<button id="discover">Connect and list models</button><button id="test">Test translation protocol</button><button id="legacyConfig">Load previous provider settings</button><p id="connection" class="status" role="status"></p>
+</fieldset>
+<fieldset><legend>Generation and batching</legend><div id="fields" class="grid"></div>
+<label>Thinking control<select id="thinking"><option value="off">Off (llama.cpp reasoning_effort / Ollama think)</option><option value="legacy">Legacy llama.cpp enable_thinking=false</option><option value="server">Use server configuration</option></select></label><small>For LM Studio and generic providers, configure thinking on the server. For current llama.cpp use Off; older builds may need Legacy. SYCL has no separate HTTP setting.</small>
+<label>Output format<select id="structured"><option value="schema">Constrained JSON schema</option><option value="json">JSON object</option><option value="prompt">Prompt-only JSON (compatibility fallback)</option></select></label>
+<label><input id="tokenize" type="checkbox">Use llama.cpp tokenizer before each batch</label><small>Context budget includes an extra template margin. Match the configured context to your server. Tokenizer failures stop the job; they do not silently skip the check.</small>
+<button id="save">Save engine and use it</button><p id="status" class="status" role="status"></p></fieldset>
+<fieldset><legend>Glossary editor and legacy assignment</legend><p>Old glossaries did not record their language and some did not identify the novel. Select a legacy glossary, assign its story and language, then merge it. Original legacy data is retained.</p>
+<label>Saved language glossary<select id="glossaries"><option value="">New glossary</option></select></label><label>Legacy glossary<select id="legacy"><option value="">Choose legacy glossary…</option></select></label>
+<div class="grid"><label>Story ID<input id="glossaryStory" placeholder="lnmtl.com/chaotic-sword-god"></label><label>Target language<input id="glossaryLanguage" placeholder="English"></label></div>
+<label>Terms (JSON source → translation)<textarea id="terms">{}</textarea></label><label>Pinned terms (one per line)<textarea id="pinned"></textarea></label>
+<button id="merge">Merge terms (keep existing definitions)</button><button id="replace">Save edited glossary (replace terms)</button><button id="export">Export all language glossaries</button><label>Import glossary JSON or exported bundle<input id="import" type="file" accept="application/json,.json"></label>
+<details><summary>Conflicts and suggested terms</summary><pre id="candidates">Select a saved glossary to review.</pre></details><p id="glossaryStatus" class="status" role="status"></p></fieldset>
+<fieldset><legend>Migration and maintenance</legend><button id="migrationReport">Download legacy migration report</button><button id="clearCache">Clear translation cache</button><button id="clearJobs">Remove finished/stopped jobs</button><p id="maintenance" class="status" role="status"></p></fieldset>
+<script src="shared.js"></script><script src="modes.js"></script><script src="provider.js"></script><script src="options.js"></script></main></body></html>

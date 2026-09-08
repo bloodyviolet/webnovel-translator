@@ -1,27 +1,36 @@
 {
   "manifest_version": 3,
   "name": "Webnovel AI Translator (Personal)",
-  "version": "1.0.0",
-  "description": "Genre-aware AI translation for webnovels (Xianxia, Xuanhuan, Wuxia, etc) with a persistent per-story glossary. Personal use only.",
-  "permissions": ["storage", "activeTab", "scripting"],
-  "host_permissions": [
-    "https://generativelanguage.googleapis.com/*",
-    "<all_urls>"
+  "version": "2.1.7",
+  "minimum_chrome_version": "120",
+  "description": "Local llama.cpp/SYCL and compatible model translation with persistent jobs and per-language story glossaries.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "tabs"
+  ],
+  "optional_host_permissions": [
+    "http://*/*",
+    "https://*/*"
   ],
   "background": {
     "service_worker": "background.js"
   },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
-      "css": ["panel.css"],
-      "run_at": "document_idle"
-    }
-  ],
   "action": {
     "default_popup": "popup.html",
     "default_title": "Webnovel Translator"
   },
-  "options_page": "options.html"
+  "options_page": "options.html",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "panel.css"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ]
 }
